@@ -1,0 +1,389 @@
+/* === 全局：更稳定的盒模型 === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* === 主题色（方便全局统一渐变）=== */
+/* CSS 选择器，顶层定义了全局可复用的颜色和尺寸变量 */
+/* 调用时，只需要 “color: var(--text-on-grad);” “font-size: var(--font-large);” */
+:root{
+  --grad-1: #66c6ba;
+  --grad-2: #a7e9e3;
+  --text-on-grad: #ffffff;
+  --header-padding-vertical: 12px;
+  --header-padding-horizontal: 5%;
+  --font-large: 18px;     /* 一级菜单字体 */
+  --font-normal: 16px;    /* 正文 */
+  --font-small: 14px;
+}
+
+/* === 通用块悬浮效果 === */
+.hover-lift {
+  display: inline-block;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1),
+              box-shadow .25s cubic-bezier(.2,.8,.2,1),
+              background .25s ease;
+  will-change: transform, box-shadow;
+  border-radius: 8px;
+  cursor: pointer;
+}
+  
+/* 悬停或聚焦时“整体抬起” */
+.hover-lift:hover,
+.hover-lift:focus {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
+  background: rgba(255,255,255,0.08);
+}
+  
+
+/* === body 基础（保留或合并或修改） === */
+body {
+  margin: 0;
+  font-family: "Microsoft Yahei", "Helvetica", sans-serif;
+  background: #f7f8fa;
+  color: #333;
+}
+
+/* ==================== 顶部 header（响应式 + 百分比/弹性宽度） ==================== */
+#header {
+  display: flex;                     /* 三栏横向布局 */
+  align-items: center;               /* 垂直居中 */
+  justify-content: space-between;
+  background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+  padding: var(--header-padding-vertical) var(--header-padding-horizontal);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  /* 不要固定高度，用 padding 控制高度，这样随字体大小自适应 */
+}
+
+/* 左 中 右 使用百分比/弹性宽度（更自适应） */
+.header-left  { flex: 0 0 15%; min-width: 90px; text-align: left; }
+.header-center{ flex: 1 1 55%; text-align: center; }
+.header-right { flex: 0 0 30%; text-align: right; }
+
+/* LOGO 自适应 */
+#logo {
+  max-height: 56px;   /* 限制高度，宽度自适应 */
+  height: auto;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* 导航菜单：使 a 成为“块级可交互区域”，便于 hover 整块突出 */
+.menu { list-style: none; margin: 0; padding: 0; }
+.menu li { display: inline-block; margin: 0 10px; }
+.menu li a {
+  display: inline-block;               /* 让 padding 生效为“块” */
+  padding: 10px 18px;
+  font-size: var(--font-large);
+  border-radius: 8px;
+  color: var(--text-on-grad);
+  text-decoration: none;
+  font-weight: 600;
+  /* font-size: 15px; 注意覆盖问题*/
+}
+
+/* 欢迎语也可当作一个“块”增强交互感 */
+.header-right .welcome {
+  display: inline-block;
+  font-size: var(--font-normal);
+  font-weight: bold;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--text-on-grad);
+  font-style: italic;
+}
+
+/* 侧边栏初始状态（隐藏在右边） */
+#side-menu {
+    position: fixed;
+    top: 0;
+    right: -260px; /* 初始隐藏 */
+    width: 240px;
+    height: 100vh;
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+    box-shadow: -2px 0 12px rgba(0,0,0,0.2);
+    transition: right 0.4s ease;  /* 平滑滑出动画 */
+    z-index: 1000;
+}
+
+/* 竖向菜单 */
+#side-menu ul {
+    list-style: none;
+    padding: 60px 20px;
+    margin: 0;
+}
+#side-menu ul li {
+    margin: 20px 0;
+}
+#side-menu ul li a {
+    display: block;
+    color: var(--text-on-grad);
+    font-size: var(--font-large);
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+#side-menu ul li a:hover {
+    background: rgba(255,255,255,0.1);
+    transform: translateX(5px);
+}
+
+/* 当菜单激活时，滑出可见 */
+#side-menu.active {
+    right: 0;
+}
+
+#overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    z-index: 900;
+    transition: opacity 0.3s ease;
+}
+#overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+#blank{
+    width: 100%;
+    height: 10px;
+    background-color: 0 8px 20px rgba(0,0,0,0.3); /* 阴影 */
+}
+
+/* 第二栏：图片滚动专区 */
+.carousel-container {
+    width: 80%;   
+    height: flex;       
+    max-height: 500px;        /* 可根据页面设计调整 */
+    max-width: 1000px;     /* 最大宽度限制 */
+    overflow: hidden;     /* 隐藏溢出部分 */
+    position: relative;
+    overflow: hidden;    /* 隐藏溢出内容 */
+    margin: 0 auto;        /* 居中 */
+    /* border-radius: 12px;          圆角装饰 */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* 阴影 */
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.6s ease; /* 平滑切换 */
+}
+
+.carousel-track img {
+    margin:0 auto;
+    width: 100%;       /* 每张图片占满容器宽度 */
+    height: 100%;     /* 和容器高度一致，保持裁剪 */
+    flex-shrink: 0;   /* 防止在水平轮播时图片被压缩 */
+}
+
+.carousel-btn {
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.4);
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+    transition: background 0.3s;
+}
+
+.carousel-btn:hover {
+    background: rgba(0,0,0,0.7);
+}
+
+.carousel-btn.prev { left: 10px; }
+.carousel-btn.next { right: 10px; }
+
+.carousel-dots {
+    position: absolute;
+    bottom: 15px;
+    width: 100%;
+    text-align: center;
+}
+
+.carousel-dots .dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: rgba(255,255,255,0.5);
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.carousel-dots .dot.active {
+    background: #fff;
+}
+
+/* 第三栏 */
+.third-section {
+    display: flex;
+    width: 100%;
+    height: 400px;
+    max-width: 1300px; /* 可选：限制宽度 */
+    margin: 50px auto; /* 居中并留空白 */
+    gap: 20px;         /* 左右区域间距 */
+}
+
+/* 左侧 */
+.left-panel {
+    flex: 1;  /* 左侧占比，可以改为固定宽度如 400px */
+    background: white;
+    height: 100%;
+    border-radius: 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    max-height: 400px; /* 固定高度 */
+}
+
+.scroll-box {
+    flex: 1;  /* 左侧占比，可以改为固定宽度如 400px */
+    background: white;
+    border-radius: 15px;
+    padding-right: 25px;
+    padding-left: 25px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-height: 350px; /* 固定高度，小于外层div，使得滚动内容周边留出空白 */
+    overflow-y: auto;  /* 内容超出时出现垂直滚动条 */
+    line-height: 1.8;
+    font-size: 1rem;
+    color: #333;
+}
+
+.scroll-box::-webkit-scrollbar {
+    width: 8px;
+}
+.scroll-box::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #a7e9e3, #66c6ba);
+    border-radius: 4px;
+}
+.scroll-box::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}  
+
+.right-panel {
+    flex: 1;                 /* 右侧占宽度比 */
+    display: flex;
+    height: 400px;
+    flex-direction: column;  /* 上下布局 */
+    gap: 20px;
+}
+
+.top-panel, .bottom-panel {
+    /* flex: 1;                 /* 上下等分 */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.top-panel{
+    
+    max-height: 300px; /* 固定高度 */
+    overflow-y: auto;  /* 内容超出时出现垂直滚动条 */
+    line-height: 1.5;
+    font-size: 1rem;
+    color: #333;
+}
+
+.top-panel::-webkit-scrollbar {
+    width: 8px;
+}
+.top-panel::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #a7e9e3, #66c6ba);
+    border-radius: 4px;
+}
+.top-panel::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}  
+
+.center {
+    text-align: center;
+}
+
+/* ==================== 抬起 + 阴影效果（通用卡片类，适用于 .place 等） ==================== */
+.card, .place {
+  background: #fff;
+  border-radius: 10px;
+  transition: transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s cubic-bezier(.2,.9,.3,1);
+  will-change: transform, box-shadow;
+  /* 轻度阴影作为默认状态（防止忽然跳变） */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* 鼠标悬停或键盘聚焦时“整体抬起” */
+.card:hover, .card:focus-within, .place:hover, .place:focus-within {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 44px rgba(0,0,0,0.18);
+}
+
+/* 图片自适应：在卡片里很重要 */
+.card img, .place img, #banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+#menu-btn {
+    display: none;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    padding: 6px 12px;
+}
+
+/* ==================== 响应式：窄屏优化 ==================== */
+@media screen and (max-width: 1024px) {
+  /* 缩小时调整左/右最小宽度，让中间有更多空间 */
+  .header-left  { flex-basis: 18%; min-width: 80px; }
+  .header-right { flex-basis: 28%; }
+  .menu li { margin: 0 8px; }
+}
+
+@media screen and (max-width: 939px) {
+    .header-left  { flex: 0 0 20%; min-width: 90px; text-align: left; }
+    .header-center{ flex: 1 1 25%; text-align: center; }
+    .header-right { flex: 0 0 55%; text-align: right; }
+    .menu {
+        display: none;
+      }
+    #menu-btn {
+        display: inline-block;
+        font-size: 26px;
+        color: white;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+  /* 手机极窄屏：让菜单条目竖直排列（更友好） */
+  .menu li { display: block; margin: 6px 0; }
+  .header-right .welcome { display: block; margin-top: 6px; }
+}
+
+@keyframes slide {
+    0%   { transform: translateX(0); }
+    33%  { transform: translateX(-100%); }
+    66%  { transform: translateX(-200%); }
+    100% { transform: translateX(0); }
+}
