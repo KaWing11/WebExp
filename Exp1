@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>山海之旅 · 我的旅行记录</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+  
+  <!-- 顶部栏 -->
+  <div id="header">
+    <div class="header-left">
+      <img src="image/logo.png" alt="网站LOGO" id="logo" />
+    </div>
+
+    <div class="header-center">
+      <ul class="menu">
+        <li><a href="#" class="hover-lift">首页</a></li>
+        <li><a href="#" class="hover-lift">旅行日记</a></li>
+        <li><a href="#" class="hover-lift">美图集锦</a></li>
+        <li><a href="#" class="hover-lift">关于我</a></li>
+      </ul>
+      <div id="menu-btn" class="hover-lift">&#9776;</div> <!-- 汉堡菜单符号 -->
+    </div>
+
+    <div class="header-right">
+      <p class="welcome hover-lift">欢迎来到我的旅行记录页面！</p>
+    </div>
+  </div>
+
+  <!-- 右侧滑出菜单 -->
+  <div id="side-menu">
+    <ul>
+      <li><a href="#">首页</a></li>
+      <li><a href="#">旅行日记</a></li>
+      <li><a href="#">美图集锦</a></li>
+      <li><a href="#">关于我</a></li>
+    </ul>
+  </div>
+
+  <div id="overlay"></div>
+  <div id="blank"></div>
+
+  <!-- 图片展示区 -->
+  <div class="carousel-container">
+    <div class="carousel-track">
+        <img src="./image/img1.jpg" alt="图片1">
+        <img src="./image/img2.jpg" alt="图片2">
+        <img src="./image/img3.jpg" alt="图片3">
+    </div>
+    <!-- 左右按钮 -->
+    <button class="carousel-btn prev">&lt;</button>
+    <button class="carousel-btn next">&gt;</button>
+    <!-- 可选圆点指示 -->
+    <div class="carousel-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+  </div>
+
+
+  <!-- 主体内容区 -->
+  <div class="third-section">
+    <!-- 左侧区域 -->
+    <div class="left-panel">
+      <div class="scroll-box">
+        <h2>旅游小记1·香格里拉</h2>
+        <p>开车驰骋在香格里拉的道路上，<br>
+        伸手可以感受风，撞了我满怀；<br>
+        仰望可看高山绿树，俯瞰可观奔涌河流；<br>
+        那是一切照片视频所不可及的，<br>
+        是五颜六色的小花带来视觉的彩色,<br>
+        不是广东炎炎夏日的热浪，<br>
+        是香格里拉入夜微凉的感觉,<br>
+        更是耳边奔腾的马的嘶吼声，<br>
+        也是路边甩尾吃草的牛的哞叫声……<br>
+        当真的美好，只有那一刻，感官会为你铭记这一刻的美好。</p>
+      </div>
+    </div>
+
+    <!-- 右侧区域 -->
+    <div class="right-panel">
+        <div class="top-panel">
+            <h3>旅行历史记录</h3>
+            <ul>
+                <li>2024年夏，贵州行</li>
+                <li>2023年冬，湖南衡山行</li>
+                <li>2023年夏，广西行</li>
+                <li>2023年夏，云南行</li>
+                <li>2023年夏，湛江徐闻行</li>
+                <li>2020年夏，福建行</li>
+                <li>2020年夏，潮州行</li>
+            </ul>
+        </div>
+        <div class="bottom-panel">
+            <h3>欢迎加入我！</h3>
+            <p>如果你也想让大家看到你的旅行日记，请投稿到邮箱975935368@qq.com！
+              留下你的署名！方便我们标注日记作者，让更多人看到你的旅行美好时光吧！
+            </p>
+        </div>
+    </div>
+  </div>
+
+  <!-- 页脚 -->
+  <div id="footer">
+    <p class="center">© 2025 KawingC · 设计与开发</p>
+  </div>
+  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prototype/1.7.3/prototype.min.js"></script>
+  <script type="text/javascript" src="./js/script.js"></script>
+
+</body>
+</html>
