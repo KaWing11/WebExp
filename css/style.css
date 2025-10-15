@@ -12,7 +12,7 @@
   --grad-1: #66c6ba;
   --grad-2: #a7e9e3;
   --text-on-grad: #ffffff;
-  --header-padding-vertical: 12px;
+  --header-padding-vertical: 10px;
   --header-padding-horizontal: 5%;
   --font-large: 18px;     /* 一级菜单字体 */
   --font-normal: 16px;    /* 正文 */
@@ -28,6 +28,7 @@
   will-change: transform, box-shadow;
   border-radius: 8px;
   cursor: pointer;
+  text-align: center;
 }
   
 /* 悬停或聚焦时“整体抬起” */
@@ -37,7 +38,11 @@
   box-shadow: 0 12px 28px rgba(0,0,0,0.18);
   background: rgba(255,255,255,0.08);
 }
-  
+
+@font-face {
+    font-family: 'MyFont';
+    src: url('../assert/font/MyFont.ttf') format('truetype');
+}
 
 /* === body 基础（保留或合并或修改） === */
 body {
@@ -59,17 +64,17 @@ body {
 }
 
 /* 左 中 右 使用百分比/弹性宽度（更自适应） */
-.header-left  { flex: 0 0 15%; min-width: 90px; text-align: left; }
+.header-left  { flex: 0 0 23%; min-width: 90px; text-align: left; }
 .header-center{ flex: 1 1 55%; text-align: center; }
-.header-right { flex: 0 0 30%; text-align: right; }
+.header-right { flex: 0 0 22%; text-align: right; }
 
 /* LOGO 自适应 */
 #logo {
-  max-height: 56px;   /* 限制高度，宽度自适应 */
-  height: auto;
-  width: auto;
-  display: inline-block;
-  vertical-align: middle;
+    width: 150px;                 /* 宽度固定 */
+    aspect-ratio: 5 / 2;          /* 自动计算高度 */
+    object-fit: cover;            /* 按比例裁剪 */
+    object-position: center;      /* 居中裁剪 */
+    border-radius: 8px;
 }
 
 /* 导航菜单：使 a 成为“块级可交互区域”，便于 hover 整块突出 */
@@ -77,9 +82,9 @@ body {
 .menu li { display: inline-block; margin: 0 10px; }
 .menu li a {
   display: inline-block;               /* 让 padding 生效为“块” */
-  padding: 10px 18px;
+  padding: 15px 15px;
   font-size: var(--font-large);
-  border-radius: 8px;
+  border-radius: 3px;
   color: var(--text-on-grad);
   text-decoration: none;
   font-weight: 600;
@@ -89,12 +94,23 @@ body {
 /* 欢迎语也可当作一个“块”增强交互感 */
 .header-right .welcome {
   display: inline-block;
-  font-size: var(--font-normal);
-  font-weight: bold;
-  padding: 6px 10px;
-  border-radius: 8px;
-  color: var(--text-on-grad);
-  font-style: italic;
+  padding: 10px 10px;
+  border-radius: 5px;
+  color:#ffffff;
+  margin: auto;
+  min-width: 220px;
+  font-family: 'MyFont';
+  font-size: 19px;
+}
+
+#menu-btn {
+    display: none;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    padding: 6px 18px;
+    border-radius: 3px;
 }
 
 /* 侧边栏初始状态（隐藏在右边） */
@@ -160,10 +176,10 @@ body {
 
 /* 第二栏：图片滚动专区 */
 .carousel-container {
-    width: 80%;   
+    width: 95%;   
     height: flex;       
-    max-height: 500px;        /* 可根据页面设计调整 */
-    max-width: 1000px;     /* 最大宽度限制 */
+    max-height: 600px;        /* 可根据页面设计调整 */
+    max-width: 1080px;     /* 最大宽度限制 */
     overflow: hidden;     /* 隐藏溢出部分 */
     position: relative;
     overflow: hidden;    /* 隐藏溢出内容 */
@@ -191,11 +207,12 @@ body {
     background: rgba(0,0,0,0.4);
     color: #fff;
     border: none;
-    padding: 10px 15px;
+    padding: 10px 14px;
     cursor: pointer;
     border-radius: 50%;
     z-index: 10;
     transition: background 0.3s;
+    font-weight: bold;
 }
 
 .carousel-btn:hover {
@@ -207,24 +224,32 @@ body {
 
 .carousel-dots {
     position: absolute;
-    bottom: 15px;
+    bottom: 7px;
     width: 100%;
     text-align: center;
 }
 
 .carousel-dots .dot {
     display: inline-block;
-    width: 12px;
-    height: 12px;
-    background: rgba(255,255,255,0.5);
+    width: 8px;
+    height: 8px;
+    margin: 0 6px;
     border-radius: 50%;
-    margin: 0 5px;
+    background: white;
+    box-shadow: 0 0 4px rgba(255,255,255,0.5);
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .carousel-dots .dot.active {
-    background: #fff;
+    background: linear-gradient(135deg,var(--grad-1), var(--grad-2));
 }
+
+.carousel-dots .dot:hover {
+    background: #fff;
+    transform: scale(1.2);
+  }
+  
 
 /* 第三栏 */
 .third-section {
@@ -261,15 +286,22 @@ body {
     max-height: 350px; /* 固定高度，小于外层div，使得滚动内容周边留出空白 */
     overflow-y: auto;  /* 内容超出时出现垂直滚动条 */
     line-height: 1.8;
-    font-size: 1rem;
     color: #333;
+}
+
+.scroll-box h2{
+    font-size: 20px;
+}
+
+.scroll-box p{
+    font-size: 15px;
 }
 
 .scroll-box::-webkit-scrollbar {
     width: 8px;
 }
 .scroll-box::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #a7e9e3, #66c6ba);
+    background: linear-gradient(180deg, var(--grad-1), var(--grad-2));
     border-radius: 4px;
 }
 .scroll-box::-webkit-scrollbar-track {
@@ -294,19 +326,36 @@ body {
 }
 
 .top-panel{
-    
-    max-height: 300px; /* 固定高度 */
+    max-height: 350px; /* 固定高度 */
     overflow-y: auto;  /* 内容超出时出现垂直滚动条 */
     line-height: 1.5;
-    font-size: 1rem;
     color: #333;
+}
+
+.top-panel li{
+    font-size: 15px;
+}
+
+#cat-font {
+    display:flex;
+    flex-direction: row;
+}
+
+#cat-font h3{
+    margin:5px;
+}
+  
+#cat-font img{
+    height: 30px;
+    width: 30px;
+    align-items: center;
 }
 
 .top-panel::-webkit-scrollbar {
     width: 8px;
 }
 .top-panel::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #a7e9e3, #66c6ba);
+    background: linear-gradient(180deg, var(--grad-1), var(--grad-2));
     border-radius: 4px;
 }
 .top-panel::-webkit-scrollbar-track {
@@ -314,41 +363,37 @@ body {
     border-radius: 4px;
 }  
 
-.center {
-    text-align: center;
+.bottom-panel p {
+    font-size: 14px;
+    margin-bottom: 6px;
 }
 
-/* ==================== 抬起 + 阴影效果（通用卡片类，适用于 .place 等） ==================== */
-.card, .place {
-  background: #fff;
-  border-radius: 10px;
-  transition: transform .28s cubic-bezier(.2,.9,.3,1), box-shadow .28s cubic-bezier(.2,.9,.3,1);
-  will-change: transform, box-shadow;
-  /* 轻度阴影作为默认状态（防止忽然跳变） */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+.bottom-panel h4{
+    margin-top: 6px;
+    margin-bottom: 6px;
 }
 
-/* 鼠标悬停或键盘聚焦时“整体抬起” */
-.card:hover, .card:focus-within, .place:hover, .place:focus-within {
-  transform: translateY(-8px);
-  box-shadow: 0 22px 44px rgba(0,0,0,0.18);
+.bottom-panel{
+    padding: 3%;
 }
 
-/* 图片自适应：在卡片里很重要 */
-.card img, .place img, #banner img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 8px;
-}
-
-#menu-btn {
-    display: none;
-    font-size: 28px;
-    font-weight: bold;
+#footer {
+    background: linear-gradient(to right, var(--grad-1), var(--grad-2));
     color: white;
-    cursor: pointer;
-    padding: 6px 12px;
+    text-align: center;
+    padding: 20px 20px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    border-top: 3px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.1);
+}
+  
+#footer p {
+    text-align: center;
+    padding: 3px;
+    margin: 0;
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* ==================== 响应式：窄屏优化 ==================== */
@@ -359,10 +404,10 @@ body {
   .menu li { margin: 0 8px; }
 }
 
-@media screen and (max-width: 939px) {
-    .header-left  { flex: 0 0 20%; min-width: 90px; text-align: left; }
-    .header-center{ flex: 1 1 25%; text-align: center; }
-    .header-right { flex: 0 0 55%; text-align: right; }
+@media screen and (max-width: 904px) {
+    .header-left  { flex: 0 0 25%; min-width: 180px; text-align: left; }
+    .header-center{ flex: 1 1 40%; text-align: center; }
+    .header-right { flex: 0 0 35%; text-align: right; }
     .menu {
         display: none;
       }
@@ -371,7 +416,7 @@ body {
         font-size: 26px;
         color: white;
         cursor: pointer;
-        margin-right: 10px;
+        margin: auto;
     }
 }
 
@@ -379,6 +424,22 @@ body {
   /* 手机极窄屏：让菜单条目竖直排列（更友好） */
   .menu li { display: block; margin: 6px 0; }
   .header-right .welcome { display: block; margin-top: 6px; }
+  body {
+    font-size: 13px; 
+  }
+  /* 第三栏 */
+    .third-section {
+        height: auto;
+    }
+    .left-panel{
+        height: auto;
+    }
+    .scroll-box{
+        height: auto;
+    }
+    .top-panel{
+        height:auto;
+    }
 }
 
 @keyframes slide {
